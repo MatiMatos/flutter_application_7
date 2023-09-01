@@ -13,20 +13,57 @@ class BottomNavScreen extends StatefulWidget {
 
 class _BottomNavScreenState extends State<BottomNavScreen> {
   int _currentIndex = 0;
-  List<Widget> _paginas = [TabHomeScreen(), TabRocketScreen(), TabSurfScreen()];
+  //List<Widget>
+  List _paginas = [
+    {
+      'pagina': TabHomeScreen(),
+      'texto': 'Home',
+      'color': 0xff0dcaf6,
+      'icono': MdiIcons.home
+    },
+    {
+      'pagina': TabRocketScreen(),
+      'texto': 'Rocket',
+      'color': 0xff0b657a,
+      'icono': MdiIcons.rocket
+    },
+    {
+      'pagina': TabSurfScreen(),
+      'texto': 'Surf',
+      'color': 0xff4a8694,
+      'icono': MdiIcons.surfing
+    }
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bottom nav'),
+        title: Text(_paginas[_currentIndex]['texto']),
+        backgroundColor: Color(_paginas[_currentIndex]['color']),
       ),
-      body: _paginas[_currentIndex],
+      body: _paginas[_currentIndex]['pagina'],
       bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(icon: Icon(MdiIcons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(MdiIcons.rocket), label: 'Rocket'),
-          BottomNavigationBarItem(icon: Icon(MdiIcons.surfing), label: 'Surf')
-        ],
+        type: BottomNavigationBarType.shifting,
+        items: _paginas.map((p) {
+          return BottomNavigationBarItem(
+              icon: Icon(p['icono']),
+              label: p['texto'],
+              backgroundColor: Color(p['color']));
+        }).toList(),
+        //[
+        //   BottomNavigationBarItem(
+        //       icon: Icon(_paginas[0]['icono']),
+        //       label: _paginas[0]['texto'],
+        //       backgroundColor: Color(_paginas[0]['color'])),
+        //   BottomNavigationBarItem(
+        //       icon: Icon(_paginas[1]['icono']),
+        //       label: _paginas[1]['texto'],
+        //       backgroundColor: Color(_paginas[1]['color'])),
+        //   BottomNavigationBarItem(
+        //       icon: Icon(_paginas[2]['icono']),
+        //       label: _paginas[2]['texto'],
+        //       backgroundColor: Color(_paginas[2]['color']))
+        // ],
         currentIndex: _currentIndex,
         onTap: (index) {
           setState(() {
